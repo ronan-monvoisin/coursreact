@@ -7,7 +7,7 @@ function Users(props) {
 
   const GetUsers = async () => {
     try {
-      const response = await fetch('http://dao/dao1/rest/personne');
+      const response = await fetch('http://restdao/personne');
       const json = await response.json();
       setPersonnes(json);
     } catch (error) {

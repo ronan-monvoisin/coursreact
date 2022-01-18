@@ -1,8 +1,10 @@
+import React, { useEffect, useState } from 'react';
+import LivreCard from './LivreCard';
 function Livres() {
   const [asyncLivres, setLivres] = useState([]);
   const GetLivres = async () => {
     try {
-      const response = await fetch('http://dao/dao1/rest/livre');
+      const response = await fetch('http://restdao/livre');
       const json = await response.json();
       setLivres(json);
     } catch (error) {
@@ -15,12 +17,14 @@ function Livres() {
     GetLivres();
   }, []);
   function ListLivres(props) {
-    return props.livres.map((livre,k) =>
-      <LivreCard key={k} livre={livre}></LivreCard>
-    );
+    return <div className="card-deck">
+      {props.livres.map((livre,k) =>
+        <LivreCard key={k} livre={livre}></LivreCard>
+      )}
+    </div>
   }
   return (
-    <ListLivres />
+    <ListLivres livres={asyncLivres} />
   );
 }
 

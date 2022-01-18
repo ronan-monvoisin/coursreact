@@ -12,3 +12,18 @@ code {
     monospace;
 }
 .modal-backdrop{background-color: #00000055;}
+@property --rotate {
+  syntax: "<angle>";
+  initial-value: 132deg;
+  inherits: false;
+}
+.card-deck{
+  margin: 1rem 0;
+  display:flex;
+  flex-flow: row wrap;
+    margin-right: -15px;
+    margin-left: -15px;
+    justify-content: space-between;
+    gap: 10px;
+}
+.no-gutters{padding:0 !important;}
