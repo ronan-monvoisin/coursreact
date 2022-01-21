@@ -27,3 +27,7 @@ code {
     gap: 10px;
 }
 .no-gutters{padding:0 !important;}
+.accordion-body {
+  max-height: 60vh;
+  overflow-y:auto;
+}

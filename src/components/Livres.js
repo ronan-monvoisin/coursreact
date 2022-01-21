@@ -17,14 +17,17 @@ function Livres() {
     GetLivres();
   }, []);
   function ListLivres(props) {
-    return <div className="card-deck">
-      {props.livres.map((livre,k) =>
+    return <div className="card-deck mx-0">
+      {props.livres.map((livre, k) =>
         <LivreCard key={k} livre={livre}></LivreCard>
       )}
     </div>
   }
   return (
-    <ListLivres livres={asyncLivres} />
+    <>
+      <h1>Livres</h1>
+      <ListLivres livres={asyncLivres} />
+    </>
   );
 }
 

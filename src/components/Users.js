@@ -9,7 +9,11 @@ function Users(props) {
     try {
       const response = await fetch('http://restdao/personne');
       const json = await response.json();
-      setPersonnes(json);
+      setPersonnes(json.map(v => ({
+        '#': v.personne_id,
+        'Prénom': v.prenom,
+        'Nom': v.nom
+      })));
     } catch (error) {
       console.error(error);
     } finally {
@@ -21,6 +25,7 @@ function Users(props) {
   }, []);
   return (
     <>
+      <h1>Users</h1>
       <Tableau data={asyncPersonnes} onClicked={(user) => props.onClicked(user)}></Tableau>
     </>
   );

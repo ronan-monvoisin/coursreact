@@ -1,4 +1,5 @@
 function Tableau(props) {
+    console.log(props);
     if (Array.isArray(props.data) && props.data.length) {
         return (
             <table className="table table-striped table-hover">

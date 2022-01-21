@@ -5,6 +5,7 @@ import Nav from './components/Nav';
 import Modal from './components/Modal';
 import Users from './components/Users';
 import Livres from './components/Livres';
+import Auteurs from './components/Auteurs';
 import Bibliotheque from './components/Bibliotheque';
 
 class App extends React.Component {
@@ -17,7 +18,7 @@ class App extends React.Component {
         livres:"Livres",
         auteurs:"Auteurs"
       },
-      page: 'Livres',
+      page: 'Auteurs',
       modal: false
     };
   }
@@ -48,7 +49,7 @@ class App extends React.Component {
     return (
       <>
         <Nav menu={ this.state.menu } page={this.state.page} onClicked={(nav) => this.setPage(nav)}/>
-        <main className="App container">
+        <main className="App container bg-dark rounded pb-2">
           <If condition={(this.state.modal) ? true : false}>
             <Modal title={this.state.modal.title} onClicked={this.setModal}>
               <If condition={(this.state.modal.object && this.state.modal.object.personne_id) ? true : false}>
@@ -60,7 +61,7 @@ class App extends React.Component {
             </Modal>
           </If>
           <If condition={this.state.page == 'Auteurs'}>
-            <Users onClicked={(truc) => this.setModal(truc)}></Users>
+            <Auteurs onClicked={(truc) => this.setModal(truc)}></Auteurs>
           </If>
           <If condition={this.state.page == 'Livres'}>
             <Livres livre={this.state.modal.object} />
