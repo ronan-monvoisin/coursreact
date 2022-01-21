@@ -1,5 +1,4 @@
 function Auteur(props) {
-  console.log('auteur', props);
   return (
     <div className="accordion-item">
       <input type="radio" id={props.auteur.prenom + props.auteur.nom} name="auteurs" class="d-none accordion-input" checked />

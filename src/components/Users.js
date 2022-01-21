@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Tableau from './Tableau';
-import If from './If';
 
 function Users(props) {
   const [asyncPersonnes, setPersonnes] = useState([]);
@@ -9,11 +8,7 @@ function Users(props) {
     try {
       const response = await fetch('http://restdao/personne');
       const json = await response.json();
-      setPersonnes(json.map(v => ({
-        '#': v.personne_id,
-        'Prénom': v.prenom,
-        'Nom': v.nom
-      })));
+      setPersonnes(json);
     } catch (error) {
       console.error(error);
     } finally {

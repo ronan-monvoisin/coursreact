@@ -1,5 +1,4 @@
 function Livre(props) {
-  console.log('livre', props);
   return (
     <div className="Livre modal-content rounded-6 shadow">
       <h2 className="fw-bold mb-0">{props.livre.titre}</h2>

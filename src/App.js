@@ -6,6 +6,7 @@ import Modal from './components/Modal';
 import Users from './components/Users';
 import Livres from './components/Livres';
 import Auteurs from './components/Auteurs';
+import LivreCard from './components/LivreCard';
 import Bibliotheque from './components/Bibliotheque';
 import Genres from './components/Genres';
 
@@ -29,14 +30,14 @@ class App extends React.Component {
     if (props.personne_id) {
       this.setState({
         modal: {
-          title: props.prenom + ' ' + props.nom,
+          title: 'Bibliotheque: '+props.prenom + ' ' + props.nom,
           object: props
         }
       });
     } else if (props.livre_id) {
       this.setState({
         modal: {
-          title: props.titre,
+          title: 'Livre: '+props.titre,
           object: props
         }
       });
@@ -65,7 +66,7 @@ class App extends React.Component {
                 <Bibliotheque user={this.state.modal} onClicked={(item) => this.setModal(item)} />
               </If>
               <If condition={(this.state.modal.object && this.state.modal.object.livre_id) ? true : false}>
-
+                <LivreCard livre={this.state.modal.object} onClicked={(item) => this.setModal(item)}></LivreCard>
               </If>
 
               <If condition={(this.state.modal.object && this.state.modal.object.genre_id) ? true : false}>

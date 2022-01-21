@@ -1,5 +1,4 @@
 function Nav(props) {
-    console.log(props.menu);
     return <nav className="navbar navbar-expand-md navbar-dark bg-dark mb-4">
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>

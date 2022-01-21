@@ -4,40 +4,37 @@ import Tableau from './Tableau';
 
 function Auteurs(props) {
   const [asyncAuteurs, setAuteurs] = useState([]);
-
-  const GetAuteurs = async () => {
-    try {
-      const response = await fetch('http://restdao/auteur');
-      const json = await response.json();
-      let allauteurs = [];
-      json.forEach(auteur => {
-        if (!allauteurs[auteur.auteur_id]) {
-          allauteurs[auteur.auteur_id] = {
-            id: auteur.auteur_id,
-            nom: auteur.nom,
-            prenom: auteur.prenom
-          }
-        }
-        if (!allauteurs[auteur.auteur_id].oeuvres) {
-          allauteurs[auteur.auteur_id].oeuvres = [];
-        }
-        allauteurs[auteur.auteur_id].oeuvres.push({
-          "#": auteur.livre_id,
-          "Image": (auteur.img != 'null') ? <img src={auteur.img} width="100px" /> : '',
-          "Titre": auteur.titre,
-          "Tome": auteur.tome,
-          "Saga": auteur.saga,
-        })
-      });
-      setAuteurs(allauteurs);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      //setLoading(false);
-    }
-  }
   useEffect(() => {
-    GetAuteurs();
+    (async () => {
+      try {
+        const response = await fetch('http://restdao/auteur');
+        const json = await response.json();
+        let allauteurs = [];
+        json.forEach(auteur => {
+          if (!allauteurs[auteur.auteur_id]) {
+            allauteurs[auteur.auteur_id] = {
+              id: auteur.auteur_id,
+              nom: auteur.nom,
+              prenom: auteur.prenom
+            }
+          }
+          if (!allauteurs[auteur.auteur_id].oeuvres) {
+            allauteurs[auteur.auteur_id].oeuvres = [];
+          }
+          allauteurs[auteur.auteur_id].oeuvres.push({
+            livre_id: auteur.livre_id,
+            img: (auteur.img != 'null') ? <img src={auteur.img} width="100px" /> : '',
+            titre: auteur.titre,
+            tome: auteur.tome,
+            saga: auteur.saga,
+            auteur_id:auteur.auteur_id
+          })
+        });
+        setAuteurs(allauteurs);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
   }, []);
   return (
     <>
