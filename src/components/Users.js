@@ -17,7 +17,6 @@ function Users(props) {
   }, []);
   return (
     <>
-      <h1>Users</h1>
       <Tableau data={asyncPersonnes} onClicked={(user) => props.onClicked(user)}></Tableau>
     </>
   );

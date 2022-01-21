@@ -27,24 +27,35 @@ class App extends React.Component {
   }
   setModal(props) {
     console.log('setModal', props);
-    if (props.personne_id) {
+    if (props.livre_id) {
       this.setState({
         modal: {
-          title: 'Bibliotheque: '+props.prenom + ' ' + props.nom,
+          type:'livre',
+          title: 'Livre: ' + props.titre,
           object: props
         }
       });
-    } else if (props.livre_id) {
+    } else if (props.auteur_id) {
       this.setState({
         modal: {
-          title: 'Livre: '+props.titre,
+          type:'auteur',
+          title: 'Auteur: ' + props.prenom + ' ' + props.nom,
+          object: props
+        }
+      });
+    } else if (props.personne_id) {
+      this.setState({
+        modal: {
+          type:'personne',
+          title: 'Bibliotheque: ' + props.prenom + ' ' + props.nom,
           object: props
         }
       });
     } else if (props.genre_id) {
       this.setState({
         modal: {
-          title: 'Genre: '+props.nom,
+          type:'genre',
+          title: 'Genre: ' + props.nom,
           object: props
         }
       });
@@ -60,20 +71,28 @@ class App extends React.Component {
       <>
         <Nav menu={this.state.menu} page={this.state.page} onClicked={(nav) => this.setPage(nav)} />
         <main className="App container bg-dark rounded pb-2">
+
           <If condition={(this.state.modal) ? true : false}>
             <Modal title={this.state.modal.title} onClicked={this.setModal}>
-              <If condition={(this.state.modal.object && this.state.modal.object.personne_id) ? true : false}>
+              <If condition={(this.state.modal.object && this.state.modal.type === 'personne') ? true : false}>
                 <Bibliotheque user={this.state.modal} onClicked={(item) => this.setModal(item)} />
               </If>
-              <If condition={(this.state.modal.object && this.state.modal.object.livre_id) ? true : false}>
+              <If condition={(this.state.modal.object && this.state.modal.type === 'livre') ? true : false}>
                 <LivreCard livre={this.state.modal.object} onClicked={(item) => this.setModal(item)}></LivreCard>
               </If>
-
-              <If condition={(this.state.modal.object && this.state.modal.object.genre_id) ? true : false}>
+              {/*
+                  modal AUTEUR
+              */}
+              <If condition={(this.state.modal.object && this.state.modal.type === 'auteur') ? true : false}>
+                <Livres auteur={this.state.modal.object} onClicked={(item) => this.setModal(item)} />
+              </If>
+              <If condition={(this.state.modal.object && this.state.modal.type === 'genre') ? true : false}>
                 <Livres genre={this.state.modal.object} onClicked={(item) => this.setModal(item)} />
               </If>
             </Modal>
           </If>
+          
+          <h1>{this.state.page}</h1>
           <If condition={this.state.page == 'Auteurs'}>
             <Auteurs onClicked={(truc) => this.setModal(truc)}></Auteurs>
           </If>

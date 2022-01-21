@@ -8,6 +8,9 @@ function Livres(props) {
         if (props.genre && props.genre.genre_id) {
           const response = await fetch('http://restdao/genre?genre_id=' + props.genre.genre_id);
           setLivres(await response.json());
+        } else if (props.auteur && props.auteur.auteur_id) {
+          const response = await fetch('http://restdao/livre?auteur_id=' + props.auteur.auteur_id);
+          setLivres(await response.json());
         } else {
           const response = await fetch('http://restdao/livre');
           setLivres(await response.json());
@@ -19,7 +22,6 @@ function Livres(props) {
   }, [props]);
   return (
     <>
-      <h1>Livres{(props.genre && props.genre.nom) ? ': ' + props.genre.nom : ''}</h1>
       <div className="card-deck mx-0">
         {asyncLivres?.map((livre, k) =>
           <LivreCard key={k} livre={livre} onClicked={(v) => props.onClicked(v)}></LivreCard>

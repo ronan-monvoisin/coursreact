@@ -8,7 +8,9 @@ function LivreCard(props) {
     (async () => {
       try {
         const response = await fetch('http://restdao/personne?personne_id=' + livre.auteur_id);
-        setAuteur(await response.json());
+        let json = await response.json();
+        json.auteur_id = json.personne_id;
+        setAuteur(json);
       } catch (error) {
         console.error(error);
       }

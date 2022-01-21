@@ -38,7 +38,6 @@ function Auteurs(props) {
   }, []);
   return (
     <>
-      <h1>Auteurs</h1>
       <Accordion defaultActiveKey="1" className="text-start">
         {asyncAuteurs.map((auteur, k) =>
           <Accordion.Item eventKey={auteur.id} key={k}>
