@@ -7,12 +7,10 @@ function Livres(props) {
       try {
         if (props.genre && props.genre.genre_id) {
           const response = await fetch('http://restdao/genre?genre_id=' + props.genre.genre_id);
-          const json = await response.json();
-          setLivres(json);
+          setLivres(await response.json());
         } else {
           const response = await fetch('http://restdao/livre');
-          const json = await response.json();
-          setLivres(json);
+          setLivres(await response.json());
         }
       } catch (error) {
         console.error(error);

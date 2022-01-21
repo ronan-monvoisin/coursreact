@@ -5,14 +5,13 @@ function Genres(props) {
     useEffect(() => {
         (async () => {
             try {
-                let response = {};
                 if (props.livre_id) {
-                    response = await fetch('http://restdao/genre?livre_id=' + props.livre_id);
+                    const response = await fetch('http://restdao/genre?livre_id=' + props.livre_id);
+                    setGenres(await response.json());
                 } else {
-                    response = await fetch('http://restdao/genre');
+                    const response = await fetch('http://restdao/genre');
+                    setGenres(await response.json());
                 }
-                const json = await response.json();
-                setGenres(json);
             } catch (error) {
                 console.error(error);
             }

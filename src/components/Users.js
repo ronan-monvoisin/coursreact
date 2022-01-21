@@ -4,19 +4,16 @@ import Tableau from './Tableau';
 function Users(props) {
   const [asyncPersonnes, setPersonnes] = useState([]);
 
-  const GetUsers = async () => {
-    try {
-      const response = await fetch('http://restdao/personne');
-      const json = await response.json();
-      setPersonnes(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      //setLoading(false);
-    }
-  }
   useEffect(() => {
-    GetUsers();
+    (async () => {
+      try {
+        const response = await fetch('http://restdao/personne');
+        const json = await response.json();
+        setPersonnes(json);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
   }, []);
   return (
     <>
