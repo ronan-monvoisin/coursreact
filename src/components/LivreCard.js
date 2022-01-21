@@ -4,34 +4,16 @@ import Genres from './Genres';
 function LivreCard(props) {
   const livre = props.livre;
   const [asyncAuteur, setAuteur] = useState([]);
-  const GetAuteur = async () => {
-    try {
-      const response = await fetch('http://restdao/personne?personne_id=' + livre.auteur_id);
-      const json = await response.json();
-      setAuteur(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      //setLoading(false);
-    }
-  }
   useEffect(() => {
-    GetAuteur();
-  }, []);
-  const [asyncGenre, setGenre] = useState([]);
-  const GetGenre = async () => {
-    try {
-      const response = await fetch('http://restdao/genre?livre_id=' + livre.livre_id);
-      const json = await response.json();
-      setGenre(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      //setLoading(false);
-    }
-  }
-  useEffect(() => {
-    GetGenre();
+    (async () => {
+      try {
+        const response = await fetch('http://restdao/personne?personne_id=' + livre.auteur_id);
+        const json = await response.json();
+        setAuteur(json);
+      } catch (error) {
+        console.error(error);
+      }
+    })()
   }, []);
   return (
     <div className="card md-3 box-shadow">
@@ -44,9 +26,7 @@ function LivreCard(props) {
           <li>{livre.saga}</li>
           <li>Tome {livre.tome}</li>
           <li>
-            <If condition={asyncGenre.length !=0}>
-              <Genres genre={asyncGenre} />
-            </If>
+            <Genres livre_id={livre.livre_id} onClicked={(genre) => props.onClicked(genre)} />
           </li>
         </ul>
         <If condition={0}>

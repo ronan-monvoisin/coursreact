@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import LivreCard from './LivreCard';
-function Livres() {
-  const [asyncLivres, setLivres] = useState([]);
-  const GetLivres = async () => {
-    try {
-      const response = await fetch('http://restdao/livre');
-      const json = await response.json();
-      setLivres(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      //setLoading(false);
-    }
-  }
+function Livres(props) {
+  const [asyncLivres, setLivres] = useState(null);
   useEffect(() => {
-    GetLivres();
-  }, []);
-  function ListLivres(props) {
-    return <div className="card-deck mx-0">
-      {props.livres.map((livre, k) =>
-        <LivreCard key={k} livre={livre}></LivreCard>
-      )}
-    </div>
-  }
+    (async () => {
+      try {
+        if (props.genre && props.genre.genre_id) {
+          const response = await fetch('http://restdao/genre?genre_id=' + props.genre.genre_id);
+          const json = await response.json();
+          setLivres(json);
+        } else {
+          const response = await fetch('http://restdao/livre');
+          const json = await response.json();
+          setLivres(json);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, [props]);
   return (
     <>
-      <h1>Livres</h1>
-      <ListLivres livres={asyncLivres} />
+      <h1>Livres{(props.genre && props.genre.nom) ? ': ' + props.genre.nom : ''}</h1>
+      <div className="card-deck mx-0">
+        {asyncLivres?.map((livre, k) =>
+          <LivreCard key={k} livre={livre} onClicked={(v) => props.onClicked(v)}></LivreCard>
+        )}
+      </div>
     </>
   );
 }
