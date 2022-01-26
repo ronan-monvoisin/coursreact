@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 import If from './components/If';
 import Nav from './components/Nav';
 import Modal from './components/Modal';
@@ -26,7 +25,6 @@ class App extends React.Component {
     };
   }
   setModal(props) {
-    console.log('setModal', props);
     if (props.livre_id) {
       this.setState({
         modal: {
@@ -80,9 +78,6 @@ class App extends React.Component {
               <If condition={(this.state.modal.object && this.state.modal.type === 'livre') ? true : false}>
                 <LivreCard livre={this.state.modal.object} onClicked={(item) => this.setModal(item)}></LivreCard>
               </If>
-              {/*
-                  modal AUTEUR
-              */}
               <If condition={(this.state.modal.object && this.state.modal.type === 'auteur') ? true : false}>
                 <Livres auteur={this.state.modal.object} onClicked={(item) => this.setModal(item)} />
               </If>
@@ -93,16 +88,16 @@ class App extends React.Component {
           </If>
           
           <h1>{this.state.page}</h1>
-          <If condition={this.state.page == 'Auteurs'}>
+          <If condition={this.state.page === 'Auteurs'}>
             <Auteurs onClicked={(truc) => this.setModal(truc)}></Auteurs>
           </If>
-          <If condition={this.state.page == 'Genres'}>
+          <If condition={this.state.page === 'Genres'}>
             <Genres onClicked={(truc) => this.setModal(truc)}></Genres>
           </If>
-          <If condition={this.state.page == 'Livres'}>
+          <If condition={this.state.page === 'Livres'}>
             <Livres livre={this.state.modal.object} onClicked={(item) => this.setModal(item)} />
           </If>
-          <If condition={this.state.page == 'Users'}>
+          <If condition={this.state.page === 'Users'}>
             <Users onClicked={(truc) => this.setModal(truc)}></Users>
           </If>
         </main>

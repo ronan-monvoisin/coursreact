@@ -23,7 +23,7 @@ function Auteurs(props) {
           }
           allauteurs[auteur.auteur_id].oeuvres.push({
             livre_id: auteur.livre_id,
-            img: (auteur.img != 'null') ? <img src={auteur.img} width="100px" /> : '',
+            img: (auteur.img !== 'null') ? <img src={auteur.img} width="100px" alt={auteur.titre} /> : '',
             titre: auteur.titre,
             tome: auteur.tome,
             saga: auteur.saga,
@@ -35,7 +35,7 @@ function Auteurs(props) {
         console.error(error);
       }
     })();
-  }, []);
+  }, [props]);
   return (
     <>
       <Accordion defaultActiveKey="1" className="text-start">

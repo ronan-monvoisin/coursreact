@@ -1,21 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import If from './If';
 import Genres from './Genres';
+
 function LivreCard(props) {
-  const livre = props.livre;
   const [asyncAuteur, setAuteur] = useState([]);
+  const [livre, setLivre] = useState(props.livre);
   useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch('http://restdao/personne?personne_id=' + livre.auteur_id);
-        let json = await response.json();
-        json.auteur_id = json.personne_id;
-        setAuteur(json);
-      } catch (error) {
-        console.error(error);
-      }
-    })()
-  }, []);
+    if (!props.livre.titre && Number.isInteger(Number(props.livre))) {
+      (async () => { // Flex premiere methode
+        try {
+          const fetchlivre = await fetch('http://restdao/livre?livre_id=' + props.livre);
+          let livrejson = await fetchlivre.json();
+          setLivre(livrejson);
+          const fetchauteur = await fetch('http://restdao/personne?personne_id=' + livrejson.auteur_id);
+          let auteur = await fetchauteur.json();
+          auteur.auteur_id = auteur.personne_id;
+          setAuteur(auteur);
+        } catch (error) {
+          console.error(error);
+        }
+      })()
+    } else {
+      (async () => {// Flex deuxieme methode
+        try {
+          const fetchauteur = await fetch('http://restdao/personne?personne_id=' + props.livre.auteur_id);
+          let auteur = await fetchauteur.json();
+          auteur.auteur_id = auteur.personne_id;
+          setAuteur(auteur);
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+    }
+  }, [props.livre]);
   return (
     <div className="card md-3 box-shadow">
       <div className="card-header">

@@ -12,7 +12,7 @@ function Bibliotheque(props) {
         console.error(error);
       }
     })();
-  }, []);
+  }, [props]);
   return (
     <>
       <Tableau data={asyncBibliotheque} onClicked={(livre) => props.onClicked(livre)}></Tableau>
