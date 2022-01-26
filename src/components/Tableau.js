@@ -1,4 +1,7 @@
 function Tableau(props) {
+    /**
+     * pas peu fière de ce petit component
+     */
     if (Array.isArray(props.data) && props.data.length) {
         return (
             <table className="table table-striped table-hover">

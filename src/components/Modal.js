@@ -1,4 +1,7 @@
 function Modal(props) {
+  /**
+   * Bootstrap et ses milliards de divs
+   */
   return (
     <>
       <div className="modal d-flex pe-none">
@@ -14,7 +17,7 @@ function Modal(props) {
           </div>
         </div>
       </div>
-        <div className="modal-backdrop" onClick={props.onClicked}></div>
+      <div className="modal-backdrop" onClick={props.onClicked}></div>
     </>
   );
 }

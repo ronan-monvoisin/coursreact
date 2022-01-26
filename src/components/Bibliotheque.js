@@ -6,8 +6,10 @@ function Bibliotheque(props) {
   useEffect(() => {
     (async () => {
       try {
-        const response = await fetch('http://restdao/bibliotheque?personne_id='+props.user.object.personne_id);
+
+        const response = await fetch('http://restdao/bibliotheque?personne_id=' + props.user.object.personne_id);
         setBibliotheque(await response.json());
+
       } catch (error) {
         console.error(error);
       }

@@ -7,29 +7,41 @@ function Auteurs(props) {
   useEffect(() => {
     (async () => {
       try {
+        // TODO : fix les data qui sortent d'ici dans le projet back
         const response = await fetch('http://restdao/auteur');
         const json = await response.json();
         let allauteurs = [];
-        json.forEach(auteur => {
-          if (!allauteurs[auteur.auteur_id]) {
-            allauteurs[auteur.auteur_id] = {
-              id: auteur.auteur_id,
-              nom: auteur.nom,
-              prenom: auteur.prenom
+        // TODO : il est un peu velu celui là...
+        /**
+         * Pour chaque livre retourné par le fetch
+         */
+        json.forEach(livre => {
+          /**
+           * Si l'auteur n'est pas présent dans le tableau allauteurs
+           * On l'ajoute
+           */
+          if (!allauteurs[livre.auteur_id]) {
+            allauteurs[livre.auteur_id] = {
+              id: livre.auteur_id,
+              nom: livre.nom,
+              prenom: livre.prenom,
+              oeuvres: []
             }
           }
-          if (!allauteurs[auteur.auteur_id].oeuvres) {
-            allauteurs[auteur.auteur_id].oeuvres = [];
-          }
-          allauteurs[auteur.auteur_id].oeuvres.push({
-            livre_id: auteur.livre_id,
-            img: (auteur.img !== 'null') ? <img src={auteur.img} width="100px" alt={auteur.titre} /> : '',
-            titre: auteur.titre,
-            tome: auteur.tome,
-            saga: auteur.saga,
-            auteur_id:auteur.auteur_id
+
+          /**
+           * Pour chaque 
+           */
+          allauteurs[livre.auteur_id].oeuvres.push({
+            livre_id: livre.livre_id,
+            img: (livre.img !== 'null') ? <img src={livre.img} width="100px" alt={livre.titre} /> : '',
+            titre: livre.titre,
+            tome: livre.tome,
+            saga: livre.saga,
+            auteur_id: livre.auteur_id
           })
         });
+
         setAuteurs(allauteurs);
       } catch (error) {
         console.error(error);

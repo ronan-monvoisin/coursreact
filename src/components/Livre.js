@@ -1,12 +1,58 @@
+import React, { useEffect, useState } from 'react';
+import Genres from './Genres';
+
 function Livre(props) {
+  const [asyncAuteur, setAuteur] = useState([]);
+  const [livre, setLivre] = useState(props.livre);
+  useEffect(() => {
+    /**
+     * Peut être appelé avec uniquement une liste d'ID de livres
+     * Controle si c'est le cas
+     */
+    if (!props.livre.titre && Number.isInteger(Number(props.livre))) {
+
+      (async () => {
+        try {
+          const fetchlivre = await fetch('http://restdao/livre?livre_id=' + props.livre);
+          let livrejson = await fetchlivre.json();
+          setLivre(livrejson);
+
+          const fetchauteur = await fetch('http://restdao/personne?personne_id=' + livrejson.auteur_id);
+          let auteur = await fetchauteur.json();
+          auteur.auteur_id = auteur.personne_id; // Pour le modal
+          setAuteur(auteur);
+        } catch (error) {
+          console.error(error);
+        }
+      })()
+
+    } else {
+
+      (async () => {
+        try {
+          const fetchauteur = await fetch('http://restdao/personne?personne_id=' + props.livre.auteur_id);
+          let auteur = await fetchauteur.json();
+          auteur.auteur_id = auteur.personne_id; // Pour le modal
+          setAuteur(auteur);
+        } catch (error) {
+          console.error(error);
+        }
+      })();
+
+    }
+  }, [props.livre]);
   return (
-    <div className="Livre modal-content rounded-6 shadow">
-      <h2 className="fw-bold mb-0">{props.livre.titre}</h2>
-      <div className="d-flex gap-4">
-        <img loading="lazy" className='float-start' src={props.livre.img} alt={props.livre.titre} />
-        <ul className="list-group">
-          <li className="list-group-item">An item</li>
+    <div className="card md-3 box-shadow">
+      <div className="card-header">
+        <h4 className="my-0 font-weight-normal">{livre.titre}</h4>
+      </div>
+      <div className="card-body">
+        <h5 className="card-title" onClick={() => props.onClicked(asyncAuteur)}>{asyncAuteur.prenom} {asyncAuteur.nom}</h5>
+        <ul className="list-unstyled">
+          <li>{livre.saga}</li>
+          <li>Tome {livre.tome}</li>
         </ul>
+        <Genres livre_id={livre.livre_id} onClicked={(genre) => props.onClicked(genre)} />
       </div>
     </div>
   );
