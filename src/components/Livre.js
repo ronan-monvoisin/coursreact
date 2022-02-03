@@ -6,8 +6,8 @@ function Livre(props) {
   const [livre, setLivre] = useState(props.livre);
   useEffect(() => {
     /**
-     * Peut être appelé avec uniquement une liste d'ID de livres
-     * Controle si c'est le cas
+     * Peut être appelé avec uniquement une ID de livre
+     * Controle si c'est le cas et va chercher les autres infos du livre
      */
     if (!props.livre.titre && Number.isInteger(Number(props.livre))) {
 
