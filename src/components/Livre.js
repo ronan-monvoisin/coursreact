@@ -44,7 +44,7 @@ function Livre(props) {
   return (
     <div className="card md-3 box-shadow">
       <div className="card-header">
-        <h4 className="my-0 font-weight-normal">{livre.titre}</h4>
+        <h4 className="my-0 font-weight-normal" onClick={() => props.onClicked(livre)}>{livre.titre}</h4>
       </div>
       <div className="card-body">
         <h5 className="card-title" onClick={() => props.onClicked(asyncAuteur)}>{asyncAuteur.prenom} {asyncAuteur.nom}</h5>
