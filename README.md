@@ -1,1 +1,1 @@
-You need https://github.com/ronan-monvoisin/coursdao yo get database for this project
+You need https://github.com/ronan-monvoisin/coursdao for your database for this project
